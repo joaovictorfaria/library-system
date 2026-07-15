@@ -1,4 +1,5 @@
 ﻿using Library.Domain.Exceptions;
+using Library.Domain.ValueObjects;
 using System;
 
 namespace Library.Domain.Entities;
@@ -8,13 +9,13 @@ public class Book
     public Guid Id { get; private set; }
     public string Title { get; private set; }
     public string AuthorName { get; private set; }
-    public string Isbn { get; private set; }
+    public Isbn Isbn { get; private set; }
     public int PublicationYear { get; private set; }
 
     public Book(
       string title,
       string authorName,
-      string isbn,
+      Isbn isbn,
       int publicationYear)
     {
         Validate(title, authorName, isbn, publicationYear);
@@ -27,10 +28,10 @@ public class Book
         PublicationYear = publicationYear;
     }
 
-    private void Validate(
+    private static void Validate(
         string title,
         string authorName,
-        string isbn,
+        Isbn isbn,
         int publicationYear)
     {
         if (string.IsNullOrWhiteSpace(title))
@@ -43,7 +44,7 @@ public class Book
             throw new DomainException("Author name is required.");
         }
 
-        if (string.IsNullOrWhiteSpace(isbn))
+        if (isbn is null)
         {
             throw new DomainException("ISBN is required.");
         }
