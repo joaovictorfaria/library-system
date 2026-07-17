@@ -36,7 +36,7 @@ public class Book
 
         _copies.Add(copy);
     }
-
+    
     private static void Validate(
         string title,
         string authorName,

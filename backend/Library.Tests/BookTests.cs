@@ -1,4 +1,5 @@
 using Library.Domain.Entities;
+using Library.Domain.Enums;
 using Library.Domain.Exceptions;
 using Library.Domain.ValueObjects;
 
@@ -36,6 +37,27 @@ namespace Library.Tests
                 -1500
                 );
             });
+        }
+
+        [Fact]
+        public void Should_Add_Available_Copy_To_Book()
+        {
+            Isbn isbn = new("094728890001");
+
+            Book book = new(
+                "A Metamorfose",
+                "Franz Kafka",
+                isbn,
+                1915
+                );
+
+            book.AddCopy();
+
+            BookCopy copy = book.Copies.First();
+
+            Assert.Single(book.Copies);
+            Assert.Equal(book.Id, copy.BookId);
+            Assert.Equal(BookCopyStatus.Available, copy.Status);
         }
     }
 }
