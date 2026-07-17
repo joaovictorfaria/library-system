@@ -28,5 +28,25 @@ public class BookCopy
         }
     }
 
+    public void Borrow()
+    {
+        if (Status != BookCopyStatus.Available)
+        {
+            throw new DomainException("Only available book copies can be borrowed.");
+        }
+
+        Status = BookCopyStatus.Borrowed;
+    }
+
+    public void Return()
+    {
+        if (Status != BookCopyStatus.Borrowed)
+        {
+            throw new DomainException("Only borrowed book copies can be returned.");
+        }
+
+        Status = BookCopyStatus.Available;
+    }
+
 }
 
