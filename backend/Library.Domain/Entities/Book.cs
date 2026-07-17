@@ -6,11 +6,13 @@ namespace Library.Domain.Entities;
 
 public class Book
 {
+    private readonly List<BookCopy> _copies = new();
     public Guid Id { get; private set; }
     public string Title { get; private set; }
     public string AuthorName { get; private set; }
     public Isbn Isbn { get; private set; }
     public int PublicationYear { get; private set; }
+    public IReadOnlyCollection<BookCopy> Copies => _copies;
 
     public Book(
       string title,
@@ -26,6 +28,13 @@ public class Book
         AuthorName = authorName;
         Isbn = isbn;
         PublicationYear = publicationYear;
+    }
+
+    public void AddCopy()
+    {
+        BookCopy copy = new(Id);
+
+        _copies.Add(copy);
     }
 
     private static void Validate(
@@ -54,6 +63,8 @@ public class Book
             throw new DomainException("Publication year is invalid.");
         }
     }
+
+  
 
 
 
